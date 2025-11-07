@@ -1,48 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Icon from "@/app/favicon.ico";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserIcon, LockIcon, LogInIcon } from "lucide-react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import Spinner from "@/components/Spinner";
 
 export default function Login() {
 
+  const params = useSearchParams();
   const router = useRouter();
-  const [ loginData, setLoginData ] = useState({ username:'', password:''});
-  const [ onLoading, setOnLoading ] = useState(false);
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [ makeLoading, setMakeLoading ] = useState(false);
 
-  const handleInputChange=(e)=> {
-    setLoginData({...loginData, [e.target.name]:e.target.value});
-  }
+  const handleInputChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
 
-  const verifyLoginData=async()=>{
 
+  // ✅ Login verification
+  const verifyLoginData = async () => {
     try {
-      setOnLoading(true)
-      const res = await axios.post('/api/admin-login', loginData);
-      console.log(res);
+      setMakeLoading(true);
+      toast.loading("Logging In...", { id: "LoginId" });
+
+      const res = await axios.post("/api/auth", loginData, {
+        withCredentials: true,
+      });
+
+      toast.success(res.data.message, { id: "LoginId" });
+      router.replace(`/artwork-admin/dashboard/featured_artworks`);
     } catch (error) {
-      console.log(error);
+      // ✅ Fixed: handle missing response gracefully
+      const errMsg =
+        error?.response?.data?.message || "Login failed. Try again.";
+      toast.error(errMsg, { id: "LoginId" });
     } finally {
-      setTimeout(()=>setOnLoading(false),2000);
+      setMakeLoading(false);
     }
-  }
+  };
 
   const onClickLogin = () => {
-
-    if(!loginData.username || !loginData.password) {
+    if (!loginData.username || !loginData.password) {
       toast.error("Please fill out the fields!");
       return;
     }
-
     verifyLoginData();
-  }
+  };
 
+  useEffect(()=>{
+    if(params.get('session')) {
+      toast.error(params.get('session'));
+    }
+  },[]);
   return (
+    <>
+
     <div className="h-screen w-screen bg-gradient-to-br from-blush to-white flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -57,7 +74,13 @@ export default function Login() {
           transition={{ delay: 0.2 }}
           className="flex flex-col items-center justify-center gap-y-2"
         >
-          <Image src={Icon} width={60} height={60} alt="Logo" onClick={()=>router.push('/artwork/home')} />
+          <Image
+            src={Icon}
+            width={60}
+            height={60}
+            alt="Logo"
+            onClick={() => router.push("/artwork/home")}
+          />
           <h1 className="uppercase font-bold text-2xl text-royal tracking-wide drop-shadow-sm">
             Admin Login
           </h1>
@@ -69,6 +92,7 @@ export default function Login() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
           className="flex flex-col items-center justify-center gap-y-5 w-full"
+          onSubmit={(e) => e.preventDefault()}
         >
           {/* Username */}
           <div className="group relative w-full">
@@ -84,8 +108,8 @@ export default function Login() {
                 onChange={handleInputChange}
                 placeholder="Username"
                 autoComplete="username"
-                required={true}
-                disabled={onLoading}
+                required
+                disabled={makeLoading}
                 className="w-full bg-transparent text-charcoal font-medium placeholder-wood focus:outline-none text-lg"
               />
             </div>
@@ -105,9 +129,9 @@ export default function Login() {
                 name="password"
                 value={loginData.password}
                 autoComplete="current-password"
-                required={true}
+                required
                 onChange={handleInputChange}
-                disabled={onLoading}
+                disabled={makeLoading}
                 className="w-full bg-transparent text-charcoal font-medium placeholder-wood focus:outline-none text-lg"
               />
             </div>
@@ -117,33 +141,36 @@ export default function Login() {
 
         {/* Login Button */}
         <AnimatePresence>
-          
-        { !onLoading
-        ? 
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{opacity: 1, y: -20 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ delay: 0.3, type: "spring" }}
-          onClick={onClickLogin}
-          disabled={onLoading}
-          className="w-44 bg-forest hover:bg-forest/90 h-12 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide"
-        >
-        <LogInIcon size={22} />
-            LOGIN
-        </motion.button>
-      : <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{opacity:0}}
-        transition={{ delay: 0.3, type: "spring", stiffness:'300' }}
-        className="w-8 border-4 border-forest animate-spin h-8 border-r-transparent rounded-full font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide">
-        </motion.div>}
+          {!makeLoading ? (
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 1, y: -20 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ delay: 0.3, type: "spring" }}
+              onClick={onClickLogin}
+              disabled={makeLoading}
+              className="w-44 bg-forest hover:bg-forest/90 h-12 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide"
+            >
+              <LogInIcon size={22} />
+              LOGIN
+            </motion.button>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 300 }}
+              className="w-8 border-4 border-forest animate-spin h-8 border-r-transparent rounded-full font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide"
+            ></motion.div>
+          )}
         </AnimatePresence>
-
       </motion.div>
     </div>
+    <AnimatePresence>
+      { makeLoading && <Spinner/>}
+    </AnimatePresence>
+    </>
   );
 }

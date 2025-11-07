@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Icon from "@/app/favicon.ico";
 import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "@/data/links";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 60 },
@@ -29,6 +29,10 @@ const itemVariants = {
 function Footer() {
 
   const nav = useRouter();
+
+  const moveToDashboard = () => {
+    nav.replace(`/artwork-admin/dashboard/featured_artworks`);
+  };
 
   return (
     <>
@@ -105,7 +109,7 @@ function Footer() {
       >
         <p className="text-sm text-blush/90 tracking-wide">
           © {new Date().getFullYear()}{" "}
-          <span className="font-semibold cursor-pointer select-none" onDoubleClick={()=>nav.push('/artwork-admin/login')}>ArtByParthi</span>. All rights reserved.
+          <span className="font-semibold cursor-pointer select-none" onDoubleClick={moveToDashboard}>ArtByParthi</span>. All rights reserved.
         </p>
       </motion.div>
     </>

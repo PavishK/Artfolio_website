@@ -1,25 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import AdminNavBar from "@/components/AdminNavBar";
 import Spinner from "@/components/Spinner";
 
-export default function ArtWorkLayout({ children }) {
+export default function AdminLayout({ children }) {
+  
   const pathname = usePathname();
-  const [ isLoading, setIsLoading ] = useState(true);
-
-  useEffect(()=>{
-    setTimeout(()=>setIsLoading(false),300);
-  },[]);
 
   return (
     <div className="flex flex-col min-h-screen font-montserrat bg-white">
       {/* Header */}
       <header className="z-50">
-        <NavBar />
+        <AdminNavBar />
       </header>
 
       {/* Main Content */}
@@ -33,14 +28,6 @@ export default function ArtWorkLayout({ children }) {
       >
         {children}
       </motion.main>
-
-      {/* Footer */}
-      <footer className="mt-auto">
-        <Footer />
-      </footer>
-      <AnimatePresence>
-        { isLoading && <Spinner/>}
-      </AnimatePresence>
     </div>
   );
 }
