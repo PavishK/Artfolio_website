@@ -1,26 +1,26 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { StarIcon, BrushIcon, LogOutIcon } from "lucide-react"; // ✅ Icons
+import { BrushIcon, LogOutIcon, ImageIcon } from "lucide-react"; // ✅ Icons
 import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 // ✅ Dynamic nav data
 const navData = [
   {
-    name: "TopArt",
-    link: `/artwork-admin/dashboard/featured_artworks`,
-    icon: <StarIcon size={22} />,
+    name: "Artist",
+    link: `/artwork-admin/dashboard/artist`,
+    icon: <BrushIcon size={22} />,
   },
   {
-    name: "Artworks",
-    link: `/artwork-admin/dashboard/manage_artworks`,
-    icon: <BrushIcon size={22} />,
+    name: "Gallery",
+    link: `/artwork-admin/dashboard/gallery`,
+    icon: <ImageIcon size={22} />,
   },
 ];
 

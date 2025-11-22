@@ -1,63 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import Icon from "@/app/favicon.ico";
 import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "@/data/links";
-import { usePathname, useRouter } from "next/navigation";
-
-const containerVariants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      when: "beforeChildren",
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+import { useRouter } from "next/navigation";
 
 function Footer() {
-
   const nav = useRouter();
 
   const moveToDashboard = () => {
-    nav.replace(`/artwork-admin/dashboard/featured_artworks`);
+    nav.replace(`/artwork-admin/dashboard/artist`);
   };
 
   return (
     <>
       {/* ====== Main Footer ====== */}
-      <motion.footer
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="w-full bg-charcoal text-blush border-t border-wood px-6 py-10 sm:py-14 overflow-hidden"
-      >
+      <footer className="w-full bg-charcoal text-blush border-t border-wood px-6 py-10 sm:py-14 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-y-8">
           
           {/* ====== Brand Section ====== */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col items-start sm:items-end text-end"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="flex items-center gap-2 mb-2"
-            >
+          <div className="flex flex-col items-center justify-center w-full lg:w-fit sm:items-end text-end">
+            <div className="flex items-center gap-2 mb-2">
               <Image
                 src={Icon}
                 alt="logo"
@@ -68,20 +32,13 @@ function Footer() {
               <h1 className="text-3xl sm:text-5xl font-semibold tracking-wide text-blush">
                 ArtByParthi
               </h1>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* ====== Footer Links ====== */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap gap-12 sm:gap-16"
-          >
+          <div className="flex flex-wrap gap-12 sm:gap-16 justify-between lg:w-fit w-full">
             {footerLinks.map((v, i) => (
-              <motion.div
-                key={i}
-                variants={itemVariants}
-                className="flex flex-col gap-y-3"
-              >
+              <div key={i} className="flex flex-col gap-y-3">
                 <h2 className="text-lg font-semibold text-wood">{v.name}</h2>
                 <ul className="space-y-2 text-sm">
                   {v.links.map((link, j) => (
@@ -93,25 +50,25 @@ function Footer() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </motion.footer>
+      </footer>
 
       {/* ====== Bottom Bar ====== */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="bg-wood text-center py-3"
-      >
+      <div className="bg-wood text-center py-3">
         <p className="text-sm text-blush/90 tracking-wide">
           © {new Date().getFullYear()}{" "}
-          <span className="font-semibold cursor-pointer select-none" onDoubleClick={moveToDashboard}>ArtByParthi</span>. All rights reserved.
+          <span
+            className="font-semibold cursor-pointer select-none"
+            onDoubleClick={moveToDashboard}
+          >
+            ArtByParthi
+          </span>
+          . All rights reserved.
         </p>
-      </motion.div>
+      </div>
     </>
   );
 }

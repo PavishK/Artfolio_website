@@ -1,92 +1,62 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { socials } from "@/data/links";
 import Masonry from "@/components/Masonry";
 import { useRouter } from "next/navigation";
 import PixelTransition from "@/components/PixelTransition";
-
+import { description } from "@/data/home";
+import { api } from "@/services/api";
+import { ArrowRight, PaletteIcon } from "lucide-react";
 
 const items = [
-    {
-      id: "1",
-      img: "https://picsum.photos/id/1015/600/900?grayscale",
-      url: "https://example.com/one",
-      height: 400,
-    },
-    {
-      id: "2",
-      img: "https://picsum.photos/id/1011/600/750?grayscale",
-      url: "https://example.com/two",
-      height: 250,
-    },
-    {
-      id: "3",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-    {
-      id: "4",
-      img: "https://picsum.photos/id/1011/600/750?grayscale",
-      url: "https://example.com/two",
-      height: 500,
-    },
-    {
-      id: "5",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-    {
-      id: "6",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-    {
-      id: "7",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-    {
-      id: "8",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-    {
-      id: "9",
-      img: "https://picsum.photos/id/1020/600/800?grayscale",
-      url: "https://example.com/three",
-      height: 600,
-    },
-      {
-      id: "10",
-      img: "https://picsum.photos/id/1011/600/750?grayscale",
-      url: "https://example.com/two",
-      height: 500,
-    },
-      {
-      id: "11",
-      img: "https://picsum.photos/id/1011/600/750?grayscale",
-      url: "https://example.com/two",
-      height: 500,
-    },
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
+    "/images/home-img.svg",
 ];
+
 function Home() {
 
   const router = useRouter();
   const exploreRef = useRef();
+  const [ artist, setArtist ] = useState({ imageUrl:null, desc:null});
+  const [ makeLoading, setMakeLoading ] = useState(false);
 
   const onClickExplore = () => {
     exploreRef.current.scrollIntoView({ behavior:'smooth'});
   }
 
+  const fetchAdminProfile = async() => {
+    try {
+      setMakeLoading(true);
+      const res = await api.get('/api/profile');
+      setArtist(res.data.data);
+    } catch (error) {
+      setArtist({
+        imageUrl: "/images/whoami.svg",
+        desc: description,
+      });
+    } finally {
+      setMakeLoading(false);
+    }
+  }
+
+  useEffect(()=>{
+    fetchAdminProfile();
+ },[]);
+
   return (
+    <AnimatePresence>
+
     <div className="w-full bg-gradient-to-br from-blush to-white">
       {/* ====== Hero Section ====== */}
       <section className="relative min-h-screen w-full flex items-center justify-center px-6 sm:px-12 lg:px-20 py-12 overflow-hidden">
@@ -110,15 +80,18 @@ function Home() {
             </p>
 
             <motion.button
-             whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 200 }}
               className="bg-royal text-blush hover:bg-wood
-                       px-8 py-3 rounded-full font-medium shadow-lg mx-auto lg:mx-0"
-            onClick={onClickExplore}
+                        px-8 py-3 rounded-full font-medium shadow-lg 
+                        flex items-center justify-center gap-2 group mx-auto lg:mx-0"
+              onClick={onClickExplore}
             >
+              <PaletteIcon className="transition-transform group-hover:rotate-90 delay-100" />
               EXPLORE
             </motion.button>
+
           </motion.div>
 
           {/* Right Image */}
@@ -159,7 +132,7 @@ function Home() {
 
     <section
       ref={exploreRef}
-      className="w-full relative flex flex-col items-center justify-start py-20"
+      className="w-full relative flex flex-col items-center justify-start py-6"
       id="gallery"
     >
       {/* Heading Section */}
@@ -199,27 +172,16 @@ function Home() {
       </motion.div>
 
       {/* Masonry Grid */}
-      <Masonry
-        items={items}
-        ease="power3.out"
-        duration={0.6}
-        stagger={0.05}
-        animateFrom="bottom"
-        scaleOnHover={true}
-        hoverScale={0.95}
-        blurToFocus={true}
-        colorShiftOnHover={false}
-      />
+      <Masonry items={items} onClickHide={onClickExplore}/>
     </section>
 
-        <section className="w-full bg-blush py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
+      <section className="w-full bg-blush py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
+
       {/* Left: Artist PixelTransition Image */}
       <motion.div
-        initial={{ opacity: 0, x: -80 }}
+        initial={{ opacity: 0, x: -40 }}
         whileInView={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.95 }}
-        transition={{ duration: 0.9, ease: "easeOut", type:'spring', stiffness:'100' }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         viewport={{ once: true }}
         className="w-full lg:w-1/2 flex justify-center"
       >
@@ -227,7 +189,8 @@ function Home() {
           <PixelTransition
             firstContent={
               <Image
-                src="/images/home-img.svg"
+                src={artist.imageUrl ?? "/images/whoami.svg"}
+                unoptimized
                 alt="Artist"
                 width={100}
                 height={100}
@@ -236,6 +199,7 @@ function Home() {
                   height: "100%",
                   objectFit: "cover",
                   borderRadius: "1rem",
+                  backgroundColor: "var(--color-blush)",
                 }}
               />
             }
@@ -250,7 +214,9 @@ function Home() {
                   borderRadius: "1rem",
                 }}
               >
-               <p style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}>Hello!</p>
+                <p style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}>
+                  Hello!
+                </p>
               </div>
             }
             gridSize={10}
@@ -264,40 +230,44 @@ function Home() {
 
       {/* Right: Text Content */}
       <motion.div
-        initial={{ opacity: 0, x: 80 }}
+        initial={{ opacity: 0, x: 40 }}
         whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
         viewport={{ once: true }}
         className="w-full lg:w-1/2 space-y-6 text-center lg:text-left"
       >
-        <h2 className="text-5xl font-extrabold text-royal">Meet the Artist</h2>
-
-        <p className="text-lg leading-relaxed text-charcoal/90">
-          <span className="text-forest font-semibold">[Artist’s Name]</span> brings
-          emotions, colors, and nature to life through her art. Her style tells
-          stories beyond words — blending{" "}
-          <span className="text-wood font-semibold">warmth</span> and imagination
-          to craft timeless works that speak to the heart.
+        <h2 className="text-5xl font-bold text-royal">Meet the Artist</h2>
+        <p className="
+          text-lg
+          leading-relaxed
+          text-charcoal/90
+          first-letter:text-4xl
+          first-letter:font-bold
+          first-letter:text-wood
+          first-letter:mr-1
+          first-line:tracking-wide
+          first-line:font-semibold
+          [text-wrap:balance]
+        ">
+          {artist.desc  ?? description}
         </p>
-
-        <p className="text-lg leading-relaxed text-charcoal/90">
-          Each creation mirrors her journey, vision, and love for artistic
-          expression — inspiring others to find beauty in simplicity and color.
-        </p>
-
-        <motion.button
-          whileHover={{ scale: 1.08, backgroundColor: "var(--color-forest)" }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 180 }}
-          className="bg-royal text-blush px-8 py-3 rounded-full font-semibold shadow-lg mx-auto lg:mx-0 mt-4"
-          onClick={() => router.push("/about")}
-        >
-          Read More
-        </motion.button>
+      <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 200 }}
+      className="bg-royal text-blush hover:bg-wood
+                px-8 py-3 rounded-full font-medium shadow-lg 
+                flex items-center justify-center gap-2 group mx-auto lg:mx-0"
+        onClick={() => router.push("/about")}
+      >
+        Read More
+        <ArrowRight className="transition-transform group-hover:translate-x-2" />
+      </motion.button>
       </motion.div>
     </section>
-  
+
    </div>
+    </AnimatePresence>
   );
 }
 

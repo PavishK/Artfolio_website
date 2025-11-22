@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-// import { register_user } from "@/controllers/registerController";
+import { register_user } from "@/controllers/registerController";
 import { verify_admin } from "@/controllers/loginController";
 
 const cookieConfig = { name: "jwttoken", httpOnly: true,

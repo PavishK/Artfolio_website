@@ -18,16 +18,15 @@ model User {
   username  String    @unique
   password  String
   role      String    @default("user")
+  imageUrl  String?   @db.Text
+  desc      String?   @db.VarChar(350)
   createdAt DateTime  @default(now())
   Artwork   Artwork[]
 }
 
 model Artwork {
   id        Int      @id @default(autoincrement())
-  artist    String
-  category  String?
   imageUrl  String
-  title     String
   createdAt DateTime @default(now())
 
   userId Int

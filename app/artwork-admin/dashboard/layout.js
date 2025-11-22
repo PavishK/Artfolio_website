@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import AdminNavBar from "@/components/AdminNavBar";
@@ -9,8 +9,20 @@ import Spinner from "@/components/Spinner";
 export default function AdminLayout({ children }) {
   
   const pathname = usePathname();
+  const audioRef = useRef(null);
+  
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.5;
+      audioRef.current.play().catch(() => {});
+    }
+  }, []);
 
   return (
+    <>
+
+    <audio ref={audioRef} src={"/audios/welcome.wav"} preload="auto"/>
+
     <div className="flex flex-col min-h-screen font-montserrat bg-white">
       {/* Header */}
       <header className="z-50">
@@ -29,5 +41,6 @@ export default function AdminLayout({ children }) {
         {children}
       </motion.main>
     </div>
+    </>
   );
 }
