@@ -85,7 +85,7 @@ export default function Artist() {
         {/* ===== Left Form Section ===== */}
         <div className="flex-1 w-full">
           <h1 className="text-4xl md:text-5xl font-bold text-royal mb-6 text-center md:text-left">
-            Profile Manager
+           Manage Profile 
           </h1>
 
           {/* desc */}
@@ -108,12 +108,6 @@ export default function Artist() {
           </div>
 
           {/* Image URL */}
-          {/* <div className="mb-8">
-            <label className="block text-wood font-semibold mb-2">
-              Upload Image
-            </label>
-            <input type="file" name="image" onChange={onSelectImage}/>
-          </div> */}
           <UploadImage choosedImage={(e) => setImage(e)}/>
 
           {/* Buttons */}
@@ -145,6 +139,7 @@ export default function Artist() {
                 height={200}
                 className="h-full w-full"
                 loading="eager"
+                unoptimized
               />
               <span className="tracking-wide text-wood">
                 No image choosed!

@@ -34,7 +34,7 @@ export default function UploadImage({ choosedImage }) {
     <div className="max-w-sm mb-4">
       <form>
         <label className="block text-wood font-semibold mb-2">
-          Upload Image
+          Profile Image
         </label>
 
         <input

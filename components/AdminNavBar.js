@@ -10,6 +10,7 @@ import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
 import axios from "axios";
 import toast from "react-hot-toast";
+import LogoutPopup from "./LogoutPopup";
 // ✅ Dynamic nav data
 const navData = [
   {
@@ -28,20 +29,8 @@ function AdminNavBar() {
   const pathname = usePathname();
   const router = useRouter();
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [ showPopup, setShowPopup ] = useState(false);
   const menuRef = useRef();
-
-
-  // ✅ Logout handler
-  const handleLogout = async() => {
-    try {
-      toast.loading("Logging out...", { id:"LogOut"});
-      const res = await axios.post('/api/auth/session', {}, { withCredentials:true});
-      toast.success(res.data.message, { id:"LogOut"});
-      router.replace("/artwork-admin/login");
-    } catch (error) {
-      toast.error("Unable to logout!", { id:"LogOut"});
-    }
-  };
 
   const menuHandler = () => setToggleMenu((prev) => !prev);
 
@@ -63,6 +52,8 @@ function AdminNavBar() {
   }, []);
 
   return (
+    <>
+
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -124,7 +115,7 @@ function AdminNavBar() {
           transition={{ type: "spring", stiffness: 200 }}
         >
           <button
-            onClick={handleLogout}
+            onClick={() => setShowPopup(true)}
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl 
                        hover:bg-blush hover:text-charcoal transition-all duration-300"
           >
@@ -146,12 +137,15 @@ function AdminNavBar() {
             <Menu
               pathname={pathname}
               navData={navData}
-              handleLogout={handleLogout}
+              handleLogout={() => setShowPopup(true)}
             />
           )}
         </AnimatePresence>
       </div>
     </motion.nav>
+
+    <LogoutPopup open={ showPopup } onClose={ () =>setShowPopup(false) }/>
+    </>
   );
 }
 

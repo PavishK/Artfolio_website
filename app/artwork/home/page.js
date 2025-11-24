@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import PixelTransition from "@/components/PixelTransition";
 import { description } from "@/data/home";
 import { api } from "@/services/api";
-import { ArrowRight, PaletteIcon } from "lucide-react";
+import { ArrowRight, BrushIcon, PaletteIcon } from "lucide-react";
 
 const items = [
     "/images/home-img.svg",
@@ -88,7 +88,7 @@ function Home() {
                         flex items-center justify-center gap-2 group mx-auto lg:mx-0"
               onClick={onClickExplore}
             >
-              <PaletteIcon className="transition-transform group-hover:rotate-90 delay-100" />
+              <PaletteIcon className="transition-transform group-hover:rotate-90" />
               EXPLORE
             </motion.button>
 
@@ -175,7 +175,7 @@ function Home() {
       <Masonry items={items} onClickHide={onClickExplore}/>
     </section>
 
-      <section className="w-full bg-blush py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
+      <section className="w-full py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
 
       {/* Left: Artist PixelTransition Image */}
       <motion.div
@@ -185,7 +185,7 @@ function Home() {
         viewport={{ once: true }}
         className="w-full lg:w-1/2 flex justify-center"
       >
-        <div className="relative group rounded-2xl overflow-hidden shadow-2xl border-2 border-wood">
+        <div className="relative group rounded-2xl overflow-hidden shadow-2xl hover:scale-105 transition-transform">
           <PixelTransition
             firstContent={
               <Image
@@ -194,33 +194,21 @@ function Home() {
                 alt="Artist"
                 width={100}
                 height={100}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "1rem",
-                  backgroundColor: "var(--color-blush)",
-                }}
+                className="w-full object-center object-cover h-full grid items-center rounded-xl bg-gradient-to-br from-blush to-white"
               />
             }
             secondContent={
               <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "grid",
-                  placeItems: "center",
-                  backgroundColor: "var(--color-royal)",
-                  borderRadius: "1rem",
-                }}
+                className="w-full h-full grid place-content-center rounded-xl bg-gradient-to-tr from-blush to-white"
               >
-                <p style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}>
+                <BrushIcon className="animate-bounce"/>
+                <p className="font-bold text-6xl first-letter:text-forest">
                   Hello!
                 </p>
               </div>
             }
             gridSize={10}
-            pixelColor="var(--color-forest)"
+            pixelColor="var(--color-blush)"
             once={false}
             animationStepDuration={0.3}
             className="custom-pixel-card"
@@ -258,7 +246,7 @@ function Home() {
       className="bg-royal text-blush hover:bg-wood
                 px-8 py-3 rounded-full font-medium shadow-lg 
                 flex items-center justify-center gap-2 group mx-auto lg:mx-0"
-        onClick={() => router.push("/about")}
+        onClick={() => router.push("/artwork/about")}
       >
         Read More
         <ArrowRight className="transition-transform group-hover:translate-x-2" />

@@ -126,9 +126,8 @@ function PixelTransition({
       className={`
         ${className}
         bg-[#271E37]
-        text-white
+        text-royal
         rounded-[15px]
-        border-2 border-white
         w-[300px]
         max-w-full
         relative
@@ -150,7 +149,7 @@ function PixelTransition({
 
       <div
         ref={activeRef}
-        className="absolute inset-0 w-full h-full z-[2]"
+        className="absolute inset-0 w-full h-full z-[2] bg-gradient-to-br from-blush to-white"
         style={{ display: "none" }}
         aria-hidden={!isActive}
       >

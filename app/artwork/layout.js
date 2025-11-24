@@ -16,7 +16,7 @@ export default function ArtWorkLayout({ children }) {
   },[]);
 
   return (
-    <div className="flex flex-col min-h-screen font-montserrat bg-white">
+    <div className="flex flex-col h-full font-montserrat bg-white">
       {/* Header */}
       <header className="z-50">
         <NavBar />

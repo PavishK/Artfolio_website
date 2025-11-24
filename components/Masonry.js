@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function ModernGridGallery({ items }) {
   return (
@@ -50,7 +50,7 @@ export default function ModernGridGallery({ items }) {
 
       {/* VIEW MORE BUTTON */}
       <div className="flex justify-center mt-8">
-        <Link href="/gallery">
+        <Link href="/artwork/gallery">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -59,9 +59,10 @@ export default function ModernGridGallery({ items }) {
                     px-8 py-3 rounded-full font-medium shadow-lg 
                     flex items-center gap-2 group"
         >
-          <EyeClosedIcon className="group-hover:hidden" />
-          <EyeIcon className="hidden group-hover:block"/>
+          
           View More
+        <ArrowRight className="transition-transform group-hover:translate-x-2" />
+        
         </motion.button>
         </Link>
       </div>

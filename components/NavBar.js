@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { HomeIcon, PhoneIcon, UserIcon } from "lucide-react";
+import { HomeIcon, ImageIcon, PhoneIcon, UserIcon } from "lucide-react";
 import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
 
 const navData = [
   { name: "Home", link: "/artwork/home", icon: <HomeIcon size={22} /> },
+  { name: "Gallery", link: "/artwork/gallery", icon: <ImageIcon size={22} /> },
   { name: "About", link: "/artwork/about", icon: <UserIcon size={22} /> },
   { name: "Contact", link: "/artwork/contact", icon: <PhoneIcon size={22} /> },
 ];
