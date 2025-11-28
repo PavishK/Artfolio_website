@@ -10,6 +10,7 @@ import PixelTransition from "@/components/PixelTransition";
 import { description } from "@/data/home";
 import { api } from "@/services/api";
 import { ArrowRight, BrushIcon, PaletteIcon } from "lucide-react";
+import CustomButton from "@/components/CustomButton";
 
 const items = [
     "/images/home-img.svg",
@@ -79,18 +80,11 @@ function Home() {
               your photo a truly one-of-a-kind artwork.
             </p>
 
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="bg-royal text-blush hover:bg-wood
-                        px-8 py-3 rounded-full font-medium shadow-lg 
-                        flex items-center justify-center gap-2 group mx-auto lg:mx-0"
-              onClick={onClickExplore}
-            >
-              <PaletteIcon className="transition-transform group-hover:rotate-90" />
-              EXPLORE
-            </motion.button>
+            <CustomButton 
+            leftIcon={<PaletteIcon className="transition-transform group-hover:rotate-90" />}
+            name={"EXPLORE"}
+            className={"bg-royal hover:bg-wood rounded-full"}
+            func={onClickExplore} />
 
           </motion.div>
 
@@ -239,19 +233,15 @@ function Home() {
         ">
           {artist.desc  ?? description}
         </p>
-      <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 200 }}
-      className="bg-royal text-blush hover:bg-wood
-                px-8 py-3 rounded-full font-medium shadow-lg 
-                flex items-center justify-center gap-2 group mx-auto lg:mx-0"
-        onClick={() => router.push("/artwork/about")}
-      >
-        Read More
-        <ArrowRight className="transition-transform group-hover:translate-x-2" />
-      </motion.button>
+
+      <CustomButton 
+      rightIcon={<ArrowRight className="transition-transform group-hover:translate-x-2" />}
+      name={"Read More"}
+      className={"bg-royal hover:bg-wood rounded-full"}
+      func={() => router.push("/artwork/about")} />
+
       </motion.div>
+
     </section>
 
    </div>

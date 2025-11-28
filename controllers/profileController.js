@@ -19,15 +19,19 @@ export async function profile_data() {
 
 export async function set_profile( data, id ) {
     try {
-    const { imageUrl, desc } = data;
+    const { imageUrl, desc, newImage } = data;
+    var fileUrl = imageUrl;
+    
+    if(newImage) {
+        const res = await imagekit.upload({
+            file:imageUrl,
+            fileName:`abp_${Date.now()}`,
+            folder:'/uploads'
+        });
+    
+        fileUrl = res.url;
+    }
 
-    const res = await imagekit.upload({
-        file:imageUrl,
-        fileName:`abp_${Date.now()}`,
-        folder:'/uploads'
-    });
-
-    const fileUrl = res.url;
 
     await prisma.user.update({
         where:{ id },

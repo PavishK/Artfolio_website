@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import CustomButton from "./CustomButton";
 
 export default function ModernGridGallery({ items }) {
+  const route = useRouter();
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
 
@@ -50,21 +52,11 @@ export default function ModernGridGallery({ items }) {
 
       {/* VIEW MORE BUTTON */}
       <div className="flex justify-center mt-8">
-        <Link href="/artwork/gallery">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className="bg-royal text-blush hover:bg-forest
-                    px-8 py-3 rounded-full font-medium shadow-lg 
-                    flex items-center gap-2 group"
-        >
-          
-          View More
-        <ArrowRight className="transition-transform group-hover:translate-x-2" />
-        
-        </motion.button>
-        </Link>
+            <CustomButton 
+            rightIcon={<ArrowRight className="transition-transform group-hover:translate-x-2" />}
+            name={"View More"}
+            className={" bg-royal hover:bg-forest rounded-full"}
+            func={()=>route.push('/artwork/gallery')} />
       </div>
     </div>
   );

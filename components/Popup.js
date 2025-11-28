@@ -1,35 +1,8 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, XIcon, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { authApi } from "@/services/api";
-import toast from "react-hot-toast";
-import { useState } from "react";
 
-export default function LogoutPopup({ open, onClose }) {
-  const router = useRouter();
-  const [ makeLoading, setMakeLoading ] = useState(false);
-
-  // Logout handler
-  const handleLogout = async () => {
-    try {
-      toast.loading("Logging out...", { id: "LogOut" });
-      setMakeLoading(true);
-      const res = await authApi.post(
-        "/api/auth/session",
-        {},
-        { withCredentials: true }
-      );
-
-      toast.success(res.data.message, { id: "LogOut" });
-      onClose();
-      router.replace("/artwork-admin/login");
-    } catch (error) {
-      toast.error("Unable to logout!", { id: "LogOut" });
-    } finally {
-        setMakeLoading(false);
-    }
-  };
+export default function Popup({ open, onClose, func,loading, icon, title, desc, btnName }) {
 
   return (
     <AnimatePresence>
@@ -50,7 +23,7 @@ export default function LogoutPopup({ open, onClose }) {
             {/* Close button */}
             <button
               onClick={onClose}
-              disabled={makeLoading}
+              disabled={loading}
               className="absolute top-3 right-3 text-charcoal hover:text-royal"
             >
               <XIcon className="w-5 h-5" />
@@ -63,37 +36,37 @@ export default function LogoutPopup({ open, onClose }) {
                 animate={{ rotate: 0 }}
                 className="p-4 bg-royal rounded-full shadow-md"
               >
-                <LogOut className="w-8 h-8 text-blush" />
+                {icon}
               </motion.div>
             </div>
 
             {/* Title */}
             <h2 className="text-2xl font-semibold text-charcoal text-center mb-2">
-              Log Out?
+              {title}
             </h2>
 
             {/* Message */}
             <p className="text-center text-charcoal/80 mb-6">
-              Are you sure you want to log out of your account?
+              {desc}
             </p>
 
             {/* Buttons */}
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                disabled={makeLoading}
+                disabled={loading}
                 className="flex-1 bg-forest text-blush py-2 rounded-xl font-medium hover:bg-forest/80 transition"
               >
                 Cancel
               </button>
 
               <button
-                onClick={handleLogout}
-                disabled={makeLoading}
+                onClick={func}
+                disabled={loading}
                 className="flex-1 bg-wood text-blush py-2 rounded-xl font-medium hover:bg-wood/80 transition flex items-center justify-center w-full"
               >
-              { !makeLoading 
-              ? "Log Out"
+              { !loading 
+              ? btnName
               : <Loader2 size={24} className="self-center animate-spin"/>
               }
               </button>
@@ -101,6 +74,7 @@ export default function LogoutPopup({ open, onClose }) {
           </motion.div>
         </motion.div>
       )}
+      
     </AnimatePresence>
   );
 }

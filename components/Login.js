@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { authApi } from "@/services/api";
+import CustomButton from "./CustomButton";
 
 export default function Login() {
 
@@ -140,32 +141,14 @@ export default function Login() {
         </motion.form>
 
         {/* Login Button */}
-        <AnimatePresence>
-          {!makeLoading ? (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 1, y: -20 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ delay: 0.3, type: "spring" }}
-              onClick={onClickLogin}
+            <CustomButton
+              leftIcon={<LogInIcon size={22} className="transition-transform group-hover:translate-x-0.5" />}
+              name={"LOGIN"}
+              className={"w-44 h-12 mt-2 bg-forest hover:bg-forest/90 rounded-2xl text-white font-semibold gap-2 shadow-lg tracking-wide"}
+              func={onClickLogin}
               disabled={makeLoading}
-              className="w-44 bg-forest hover:bg-forest/90 h-12 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide"
-            >
-              <LogInIcon size={22} />
-              LOGIN
-            </motion.button>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 300 }}
-              className="w-8 border-4 border-forest animate-spin h-8 border-r-transparent rounded-full font-semibold text-white flex items-center justify-center gap-2 shadow-lg mt-2 tracking-wide"
-            ></motion.div>
-          )}
-        </AnimatePresence>
+            />
+
       </motion.div>
     </div>
     <AnimatePresence>

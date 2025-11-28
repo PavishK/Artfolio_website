@@ -3,10 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import CustomButton from "@/components/CustomButton";
+import { useRouter } from "next/navigation";
 
 export default function Error404() {
+  const route = useRouter();
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-blush">
       <motion.div
@@ -25,29 +27,20 @@ export default function Error404() {
             alt="Not Found"
             width={400}
             height={400}
+            loading="eager"
             className="mx-auto mb-6"
           />
         </motion.div>
 
         {/* Button Animation */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.92 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className="mx-auto"
-        >
-          <Link
-            href="/artwork/home"
-            className="inline-flex group items-center gap-2 
-                       bg-forest text-white
-                       hover:bg-wood
-                       px-8 py-3 rounded-full font-semibold 
-                       shadow-lg transition-all duration-200"
-          >
-            <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1"/>
-            Go Back
-          </Link>
-        </motion.div>
+        <div className="grid place-content-center" >
+          <CustomButton
+            leftIcon={<ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1"/>}
+            name={"Go Back"}
+            className={"bg-wood hover:bg-forest rounded-full"}
+            func={()=>route.replace("/artwork/home")}
+          />
+        </div>
       </motion.div>
     </div>
   );

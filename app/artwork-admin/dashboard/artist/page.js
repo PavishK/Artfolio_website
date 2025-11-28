@@ -8,11 +8,14 @@ import toast from "react-hot-toast";
 import { api, authApi } from "@/services/api";
 import Spinner from "@/components/Spinner";
 import UploadImage from "@/components/UploadImage";
+import CustomButton from "@/components/CustomButton";
+import { BrushIcon, SaveIcon } from 'lucide-react';
 
 export default function Artist() {
 
   const [ desc, setDesc ] = useState("");
   const [ image, setImage ]= useState("");
+  const [ isNewImage, setIsNewImage ] = useState(false);
   const [makeLoading, setMakeLoading] = useState(false);
 
   // Fetch profile data
@@ -59,13 +62,14 @@ export default function Artist() {
     }
 
     if(!image) {
-      toast.error("Please upload n image!");
+      toast.error("Please upload an image!");
       return;
     }
 
     updateProfile({
       imageUrl:image,
-      desc:desc
+      desc:desc,
+      newImage:isNewImage
     });
 
   };
@@ -108,18 +112,17 @@ export default function Artist() {
           </div>
 
           {/* Image URL */}
-          <UploadImage choosedImage={(e) => setImage(e)}/>
+          <UploadImage choosedImage={(e) => setImage(e)} newImage={(val)=>setIsNewImage(val)}/>
 
           {/* Buttons */}
           <div className="flex gap-5 w-full items-center justify-end">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSave}
-              className="w-40 py-3 rounded-full bg-royal hover:bg-wood text-blush font-semibold shadow-md transition"
-            >
-              Save
-            </motion.button>
+            <CustomButton
+            leftIcon={<SaveIcon size={22} className="transition-transform group-hover:translate-x-0.5"/>}
+              name={"Save"}
+              className={"w-40 py-3 rounded-full bg-royal hover:bg-wood font-semibold"}
+              func={handleSave}
+              disable={makeLoading}
+            />
           </div>
         </div>
 
@@ -151,44 +154,28 @@ export default function Artist() {
                 firstContent={
                   <Image
                     src={image}
+                    unoptimized
                     alt="Artist"
-                    width={300}
-                    height={300}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                    }}
+                    width={100}
+                    height={100}
+                    className="w-full object-center object-cover h-full grid items-center rounded-xl bg-gradient-to-br from-blush to-white"
                   />
                 }
                 secondContent={
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "grid",
-                      placeItems: "center",
-                      backgroundColor: "var(--color-royal)",
-                      borderRadius: "1rem",
-                    }}
-                  >
-                    <p
-                      style={{
-                        fontWeight: 900,
-                        fontSize: "3rem",
-                        color: "#ffffff",
-                      }}
-                    >
-                      Hello!
-                    </p>
-                  </div>
+              <div
+                className="w-full h-full grid place-content-center rounded-xl bg-gradient-to-tr from-blush to-white"
+              >
+                <BrushIcon className="animate-bounce"/>
+                <p className="font-bold text-6xl first-letter:text-forest">
+                  Hello!
+                </p>
+              </div>
                 }
-                gridSize={10}
-                pixelColor="var(--color-forest)"
-                once={false}
-                animationStepDuration={0.3}
-                className="custom-pixel-card"
+              gridSize={10}
+              pixelColor="var(--color-blush)"
+              once={false}
+              animationStepDuration={0.3}
+              className="custom-pixel-card"
               />
               <span className="tracking-wide text-wood">
                 Tap or Hover or Click the above image.

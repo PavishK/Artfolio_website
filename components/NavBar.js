@@ -4,16 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { HomeIcon, ImageIcon, PhoneIcon, UserIcon } from "lucide-react";
 import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
-
-const navData = [
-  { name: "Home", link: "/artwork/home", icon: <HomeIcon size={22} /> },
-  { name: "Gallery", link: "/artwork/gallery", icon: <ImageIcon size={22} /> },
-  { name: "About", link: "/artwork/about", icon: <UserIcon size={22} /> },
-  { name: "Contact", link: "/artwork/contact", icon: <PhoneIcon size={22} /> },
-];
+import { clientSites } from "@/data/menus";
 
 function NavBar() {
   const pathname = usePathname();
@@ -63,7 +56,7 @@ function NavBar() {
 
       {/* Desktop Navigation */}
       <ul className="hidden sm:flex items-center gap-x-1 sm:gap-x-4 font-medium">
-        {navData.map((v, i) => {
+        {clientSites.map((v, i) => {
           const isActive = pathname === v.link;
           return (
             <motion.li
@@ -118,7 +111,7 @@ function Menu({ pathname }) {
                  bg-royal rounded-xl shadow-lg border border-blush/40"
     >
       <ul className="w-full flex flex-col items-center justify-center gap-y-3 font-medium">
-        {navData.map((v, i) => {
+        {clientSites.map((v, i) => {
           const isActive = pathname === v.link;
           return (
             <motion.li

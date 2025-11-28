@@ -5,34 +5,43 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { BrushIcon, LogOutIcon, ImageIcon } from "lucide-react"; // ✅ Icons
+import { LogOutIcon } from "lucide-react"; // ✅ Icons
+import { authApi } from "@/services/api";
 import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
-import axios from "axios";
 import toast from "react-hot-toast";
-import LogoutPopup from "./LogoutPopup";
-// ✅ Dynamic nav data
-const navData = [
-  {
-    name: "Artist",
-    link: `/artwork-admin/dashboard/artist`,
-    icon: <BrushIcon size={22} />,
-  },
-  {
-    name: "Gallery",
-    link: `/artwork-admin/dashboard/gallery`,
-    icon: <ImageIcon size={22} />,
-  },
-];
+import Popup from "./Popup";
+import { adminSites } from '@/data/menus'
 
 function AdminNavBar() {
   const pathname = usePathname();
   const router = useRouter();
   const [toggleMenu, setToggleMenu] = useState(false);
   const [ showPopup, setShowPopup ] = useState(false);
+  const [ makeLoading, setMakeLoading] = useState(false);
   const menuRef = useRef();
 
   const menuHandler = () => setToggleMenu((prev) => !prev);
+
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      toast.loading("Logging out...", { id: "LogOut" });
+      setMakeLoading(true);
+      const res = await authApi.post(
+        "/api/auth/session",
+        {});
+
+      toast.success(res.data.message, { id: "LogOut" });
+      setShowPopup(false);
+      router.replace("/artwork-admin/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to logout!", { id: "LogOut" });
+    } finally {
+        setMakeLoading(false);
+    }
+  };
 
   useEffect(() => {
     const onCloseMenu = (e) => {
@@ -82,7 +91,7 @@ function AdminNavBar() {
 
       {/* Desktop Navigation */}
       <ul className="hidden sm:flex items-center gap-x-1 sm:gap-x-4 font-medium">
-        {navData.map((v, i) => {
+        {adminSites.map((v, i) => {
           const isActive = pathname === v.link;
           return (
             <motion.li
@@ -136,7 +145,7 @@ function AdminNavBar() {
           {toggleMenu && (
             <Menu
               pathname={pathname}
-              navData={navData}
+              navData={adminSites}
               handleLogout={() => setShowPopup(true)}
             />
           )}
@@ -144,7 +153,17 @@ function AdminNavBar() {
       </div>
     </motion.nav>
 
-    <LogoutPopup open={ showPopup } onClose={ () =>setShowPopup(false) }/>
+    <Popup 
+    open={ showPopup } 
+    onClose={ () =>setShowPopup(false) } 
+    func={handleLogout} 
+    loading={makeLoading}
+    icon={<LogOutIcon className="w-8 h-8 text-blush" />}
+    title={"Log Out?"}
+    desc={"Are you sure you want to log out of your account?"}
+    btnName={"Log Out"}
+    />
+
     </>
   );
 }

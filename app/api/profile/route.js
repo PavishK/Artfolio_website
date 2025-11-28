@@ -9,7 +9,7 @@ export async function GET(req) {
 
 export async function PUT(req) {
 
-    const { imageUrl, desc } = await req.json();
+    const { imageUrl, desc, newImage } = await req.json();
     const { user_id, status:code, message:info } = await verify_session();
 
     if( code !== 200 || !user_id )
@@ -18,7 +18,7 @@ export async function PUT(req) {
     if(!imageUrl || !desc )
         return NextResponse.json({ message:"Missing data!" }, { status:400 });
 
-    const { message, status, error } = await set_profile({ imageUrl, desc }, user_id);
+    const { message, status, error } = await set_profile({ imageUrl, desc, newImage }, user_id);
     return NextResponse.json( { message }, { status });
        
 }

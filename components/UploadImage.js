@@ -4,7 +4,7 @@ import { convertToBase64 } from "@/services/convertToBase64";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function UploadImage({ choosedImage }) {
+export default function UploadImage({ choosedImage, newImage }) {
 
     const [ error, setError ] = useState(false);
 
@@ -28,6 +28,7 @@ export default function UploadImage({ choosedImage }) {
         setError(false);
         const base64 = await convertToBase64(file);
         choosedImage(base64);
+        newImage(true);
     }
 
   return (
