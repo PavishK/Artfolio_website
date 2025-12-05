@@ -15,10 +15,9 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
   const verifyDate = ( date ) => {
     const createdAt = new Date(date).toDateString();
     const dateNow = new Date().toDateString();
-
     return createdAt == dateNow;
-
   }
+  
   return (
 
    <div className="min-h-screen bg-gradient-to-br from-blush to-white p-6 md:p-10">
@@ -46,7 +45,7 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
             className="relative group overflow-hidden rounded-xl shadow-xl border-2 border-royal bg-white"
           >
             <Image
-              src={val.src}
+              src={val.imageUrl}
               width={100}
               height={100}
               alt="gallery img"
@@ -61,7 +60,7 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
             </motion.div> }
 
             { adminMode 
-            && <Trash2Icon onClick={()=>onClickDelete(i)} size={24} className='absolute bg-red-500 top-2 right-2 size-8 p-1 rounded-lg text-white hover:scale-105 transition-transform cursor-pointer'/>}
+            && <Trash2Icon onClick={()=>onClickDelete(val.id)} size={24} className='absolute bg-red-500 top-2 right-2 size-8 p-1 rounded-lg text-white hover:scale-105 transition-transform cursor-pointer'/>}
 
             {/* Hover Caption */}
            { !adminMode && <div

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import {
   ChevronsUp,
 } from "lucide-react";
+import CustomButton from "./CustomButton";
 
 function Footer() {
   const nav = useRouter();
@@ -72,15 +73,12 @@ function Footer() {
             </div>
 
             {/* Back to Top Button */}
-            <button
-              onClick={scrollToTop}
-              className="mt-6 px-5 py-2 rounded-full bg-wood text-charcoal font-medium
-                         shadow-lg hover:bg-forest hover:text-blush transition-all 
-                         duration-300 hover:scale-105 flex items-center gap-2"
-            >
-              <ChevronsUp size={24} />
-              Back to Top
-            </button>
+            <CustomButton 
+            leftIcon={<ChevronsUp className="transition-transform group-hover:-translate-y-1" />}
+            name={"BACK TO TOP"}
+            className={"bg-wood hover:bg-forest rounded-full mt-2"}
+            func={scrollToTop} />
+
           </div>
 
           {/* Footer Links */}

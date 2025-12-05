@@ -11,22 +11,12 @@ import { description } from "@/data/home";
 import { api } from "@/services/api";
 import { ArrowRight, BrushIcon, PaletteIcon } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
-
-const items = [
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-    "/images/home-img.svg",
-];
+import useFetchGallery from "@/hooks/useFetchGallery";
+import Spinner from "@/components/Spinner";
 
 function Home() {
 
+  const { images, loading, error } = useFetchGallery();
   const router = useRouter();
   const exploreRef = useRef();
   const [ artist, setArtist ] = useState({ imageUrl:null, desc:null});
@@ -56,8 +46,6 @@ function Home() {
  },[]);
 
   return (
-    <AnimatePresence>
-
     <div className="w-full bg-gradient-to-br from-blush to-white">
       {/* ====== Hero Section ====== */}
       <section className="relative min-h-screen w-full flex items-center justify-center px-6 sm:px-12 lg:px-20 py-12 overflow-hidden">
@@ -166,7 +154,7 @@ function Home() {
       </motion.div>
 
       {/* Masonry Grid */}
-      <Masonry items={items} onClickHide={onClickExplore}/>
+      <Masonry items={images} onClickHide={onClickExplore}/>
     </section>
 
       <section className="w-full py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
@@ -243,9 +231,12 @@ function Home() {
       </motion.div>
 
     </section>
+    
+    <AnimatePresence>
+    { makeLoading && loading && <Spinner/> }
+    </AnimatePresence>
 
    </div>
-    </AnimatePresence>
   );
 }
 

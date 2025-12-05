@@ -9,13 +9,15 @@ import { api, authApi } from "@/services/api";
 import Spinner from "@/components/Spinner";
 import UploadImage from "@/components/UploadImage";
 import CustomButton from "@/components/CustomButton";
-import { BrushIcon, SaveIcon } from 'lucide-react';
+import { BrushIcon, Edit2Icon, SaveIcon } from 'lucide-react';
+import ChangePasswordPopup from "@/components/ChangePasswordPopup";
 
 export default function Artist() {
 
   const [ desc, setDesc ] = useState("");
   const [ image, setImage ]= useState("");
   const [ isNewImage, setIsNewImage ] = useState(false);
+  const [ showPopup, setShowPopup ] = useState(false);
   const [makeLoading, setMakeLoading] = useState(false);
 
   // Fetch profile data
@@ -180,12 +182,24 @@ export default function Artist() {
               <span className="tracking-wide text-wood">
                 Tap or Hover or Click the above image.
               </span>
+              
+              <CustomButton
+              leftIcon={<Edit2Icon size={22} className="transition-transform group-hover:-translate-x-1"/>}
+              name={"Change Password"}
+              className={"py-3 w-fit rounded-full bg-wood hover:bg-forest font-semibold"}
+              func={() => setShowPopup(true)}
+              disable={makeLoading}
+              />
+
             </div>
           )}
         </motion.div>
       </motion.div>
-
-      <AnimatePresence>{makeLoading && <Spinner />}</AnimatePresence>
+      
+      <ChangePasswordPopup open={showPopup} onClose={() => setShowPopup(false)}/>
+      <AnimatePresence>
+          { makeLoading && <Spinner /> }
+      </AnimatePresence>
     </div>
   );
 }

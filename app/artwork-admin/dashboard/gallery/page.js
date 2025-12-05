@@ -4,53 +4,13 @@ import React, { useEffect, useState } from 'react';
 import GalleryList from '@/components/GalleryList';
 import Popup from '@/components/Popup';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
-
-
-const data = [
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-01-10 10:15:00.000"
-  },
-  {
-    "src": "/images/home-img.svg",
-    "createdAt": "2025-01-12 14:20:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-01-14 09:45:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-01-18 16:30:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-01-20 11:10:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-11-25 18:00:00.000"
-  },
-  {
-    "src": "/images/image-holder.svg",
-    "createdAt": "2025-01-25 08:55:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-01-28 12:40:00.000"
-  },
-  {
-    "src": "/images/404.svg",
-    "createdAt": "2025-02-01 15:05:00.000"
-  },
-  {
-    "src": "/images/whoami.svg",
-    "createdAt": "2025-11-25 18:00:00.000"
-  }
-]
+import useFetchGallery from '@/hooks/useFetchGallery';
+import { authApi } from '@/services/api';
+import toast from 'react-hot-toast';
 
 function Gallery() {
 
+  const { images:data, loading, error } = useFetchGallery();
   const [ images, setImages ] = useState([]);
   const [ deleteId, setDeleteId ] = useState(null);
   const [ showPopup, setShowPopup ] = useState(false);
@@ -61,20 +21,29 @@ function Gallery() {
     setShowPopup(true);
   }
 
-  const handleDelete = () => {
-
-    if(deleteId!=null)
-      setImages(
-        images.filter((v,i) => i!==deleteId)
-      );
-    
+  const handleDelete = async() => {
+    if(deleteId!=null) {
+      try {
+        setMakeLoading(true);
+        const res = await authApi.delete(`/api/gallery/${deleteId}`);
+        setImages(
+          images.filter((v) => v.id!==deleteId)
+        );
+        toast.success(res.data.message);
+      } catch (error) {
+        toast.error("Unable to delete image!");
+      } finally {
+        setMakeLoading(false);
+      }
+    }
     setShowPopup(false);
     setDeleteId(null);
   }
 
   useEffect(()=>{
     setImages(data);
-  },[])
+    console.log(data);
+  },[loading])
 
   return (
     <div className='relative h-full w-full'>

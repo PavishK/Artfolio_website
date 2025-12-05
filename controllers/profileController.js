@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { imagekit } from "@/lib/imagekit";
+import { compare_password, hash_password } from "@/lib/bcrypt";
 
 export async function profile_data() {
     try {
@@ -43,4 +44,27 @@ export async function set_profile( data, id ) {
         return { message:"Internal server error!", status:500, error:error.message };
     }
     
+}
+
+export async function update_password(currentPassword, newPassword, id) {
+    try {
+        
+        const existUser = await prisma.user.findUnique({ where:{ id }});
+
+        const matched = await compare_password(currentPassword, existUser.password);
+
+        if(!matched)
+            return { message:"Invalid current password!", status:401 };
+
+        const hashed = await hash_password(newPassword);
+        
+        await prisma.user.update({
+            where:{ id },
+            data: { password:hashed },
+        });
+
+        return { message:"Password updated successfully!", status:200 };
+    } catch (error) {
+        return { messgae:"Internal server error!", status:500, error:error};
+    }
 }
