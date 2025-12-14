@@ -151,10 +151,10 @@ function Home() {
           whileInView={{ scaleX: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
         />
-      </motion.div>
 
       {/* Masonry Grid */}
       <Masonry items={images} onClickHide={onClickExplore}/>
+      </motion.div>
     </section>
 
       <section className="w-full py-20 px-8 lg:px-20 flex flex-col lg:flex-row items-center justify-center gap-16 text-charcoal overflow-hidden">
@@ -230,6 +230,57 @@ function Home() {
 
       </motion.div>
 
+    </section>
+
+
+    <section className="w-full py-20">
+      <div className="max-w-4xl mx-auto px-6">
+
+        {/* Container */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="relative pl-6 "
+        >
+          {/* Decorative accent */}
+          <motion.span
+            initial={{ height: 0, opacity: 0 }}
+            whileInView={{ height: "100%", opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="absolute left-0 top-0 w-1 bg-royal rounded-full"
+          />
+
+          {/* Quote */}
+          <h2 className="text-3xl md:text-4xl font-cormorant font-medium text-royal leading-snug">
+            “Art is something that gives you inspiration in life.”
+          </h2>
+
+          {/* Author */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-5 text-lg md:text-xl font-medium text-charcoal"
+          >
+            — Takashi Murakami
+          </motion.p>
+
+        </motion.div>
+
+        {/* Decorative dots */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-10 flex items-center justify-center gap-3"
+        >
+          <span className="inline-block w-3 h-3 rounded-full bg-forest"></span>
+          <span className="inline-block w-3 h-3 rounded-full bg-royal"></span>
+          <span className="inline-block w-3 h-3 rounded-full bg-wood"></span>
+        </motion.div>
+
+      </div>
     </section>
     
     <AnimatePresence>

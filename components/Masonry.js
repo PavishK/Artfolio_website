@@ -10,7 +10,7 @@ export default function ModernGridGallery({ items }) {
 
   let images = items.map((item) => item.imageUrl || "");
 
-  if (images.length < 4) {
+  if (images.length < 5) {
     images = [...images, ...images, ...images, ...images, ...images]; // now 4 copies
   }
 

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { fetchImages, saveImage } from "@/controllers/galleryController";
+import { verify_session } from "@/middleware/auth";
 
 export async function GET(req) {
     const { message, status, error, data } = await fetchImages();
@@ -18,6 +19,6 @@ export async function POST(req) {
     if(!imageUrl)
         return NextResponse.json({ message:"Missing image!" }, { status:400 });
 
-    const { message, status, error } = await saveImage({ imageUrl, userId });
-    return NextResponse.json({ message }, { status });
+    const { message, status, error, data } = await saveImage({ imageUrl, userId });
+    return NextResponse.json({ message, data }, { status });
 }

@@ -20,9 +20,9 @@ export const fetchImages = async() => {
     }
 }
 
-export const saveImage = async(data) => {
+export const saveImage = async(imageData) => {
     try {
-        const { imageUrl, userId } = data;
+        const { imageUrl, userId } = imageData;
         
         const res = await imagekit.upload({
             file:imageUrl,
@@ -36,8 +36,7 @@ export const saveImage = async(data) => {
                 userId
             }
         });
-        console.log(data);
-        return { message:"Image saved successfully!", status:201 };
+        return { message:"Image saved successfully!", status:201, data };
     } catch (error) {
         return { message:"Internal server error!", status:500, error };
     }

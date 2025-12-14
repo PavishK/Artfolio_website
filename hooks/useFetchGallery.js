@@ -12,7 +12,6 @@ function useFetchGallery() {
         try {
             setLoading(true);
             const res = await api.get("/api/gallery");
-            console.log(res);
             setImages(res.data.data);
         } catch (error) {
             setError(error);

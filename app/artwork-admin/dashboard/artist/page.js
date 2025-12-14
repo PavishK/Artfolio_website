@@ -53,8 +53,6 @@ export default function Artist() {
     }
   };
 
-
-
   // Save handler
   const handleSave = () => {
 

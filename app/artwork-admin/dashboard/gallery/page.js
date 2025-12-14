@@ -7,6 +7,7 @@ import { PlusIcon, Trash2Icon } from 'lucide-react';
 import useFetchGallery from '@/hooks/useFetchGallery';
 import { authApi } from '@/services/api';
 import toast from 'react-hot-toast';
+import AddImagePopup from '@/components/AddImagePopup';
 
 function Gallery() {
 
@@ -14,6 +15,7 @@ function Gallery() {
   const [ images, setImages ] = useState([]);
   const [ deleteId, setDeleteId ] = useState(null);
   const [ showPopup, setShowPopup ] = useState(false);
+  const [ showAddPopup, setShowAddPopup ] = useState(false);
   const [ makeLoading, setMakeLoading ] = useState(false);
 
   const showDeletePopup = (id) => {
@@ -40,9 +42,22 @@ function Gallery() {
     setDeleteId(null);
   }
 
+  const addNewImage = async( fileUrl ) => {
+    try {
+      setMakeLoading(true);
+      const res = await authApi.post('/api/gallery',{ imageUrl:fileUrl });
+      setImages([ res.data.data, ...images ]);
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error("Error saving image!");
+    } finally {
+      setShowAddPopup(false);
+      setMakeLoading(false);
+    }
+  }
+
   useEffect(()=>{
     setImages(data);
-    console.log(data);
   },[loading])
 
   return (
@@ -58,9 +73,12 @@ function Gallery() {
         desc={"Are you sure you want to delete this image?"}
         btnName={"Delete"}
       />
-      <div className='group fixed cursor-pointer right-6 bottom-6 bg-forest size-13 grid place-content-center rounded-2xl transition-all hover:scale-110 hover:bg-wood shadow-2xl'>
+
+      <div onClick={()=>setShowAddPopup(true)} className='group fixed cursor-pointer right-6 bottom-6 bg-forest size-13 grid place-content-center rounded-2xl transition-all hover:scale-110 hover:bg-wood shadow-2xl'>
       <PlusIcon size={45} className='transition-all group-hover:rotate-180 group-hover:p-1'/>
       </div>
+
+      <AddImagePopup open={showAddPopup} onClose={()=>setShowAddPopup(false)} loading={makeLoading} func={ (val)=>addNewImage(val) }/>
     </div>
   )
 }

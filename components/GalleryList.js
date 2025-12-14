@@ -49,7 +49,8 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
               width={100}
               height={100}
               alt="gallery img"
-              className="w-full h-auto object-contain p-4 transition-all duration-500 group-hover:scale-105"
+              loading="eager"
+              className="w-full h-96 object-cover object-center transition-all duration-500 group-hover:scale-105"
             />
 
             {/* New Indicate */}
