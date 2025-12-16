@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Contact2Icon } from "lucide-react";
+import { ArrowRight, Contact2Icon, HandIcon } from "lucide-react";
 import Image from "next/image";
 import CustomButton from "@/components/CustomButton";
 import { useRouter } from "next/navigation";
@@ -58,9 +58,9 @@ export default function About() {
       </section>
 
       {/* SECTION 2 — STORY */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-10 py-10 sm:py-14">
+      <section className="w-full max-w-6xl mx-auto px-6 sm:px-10 py-10">
         <motion.h2
-          className="text-4xl font-semibold text-forest text-center mb-6 sm:mb-10"
+          className="text-4xl font-semibold text-forest text-center mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -71,7 +71,7 @@ export default function About() {
 
         {/* Decorative line */}
         <motion.div
-          className="mt-6 h-[3px] w-32 mx-auto bg-gradient-to-r from-forest via-wood to-royal rounded-full mb-4"
+          className="h-1 w-32 mx-auto bg-gradient-to-r from-forest via-wood to-royal rounded-full mb-4"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
@@ -129,8 +129,15 @@ export default function About() {
       viewport={{ once:true }}
       animate={{ duration:0.8 }}
       className="w-full px-6 py-12 flex flex-col items-center text-center">
-        <h2 className="text-2xl md:text-3xl font-semibold text-royal mb-3">
-          Say Hello
+        <h2 className="flex items-center justify-center gap-x-1 text-2xl md:text-3xl font-semibold text-royal mb-3">
+          Say Hello 
+          <motion.div
+          initial={{ rotate:-40 }}
+          whileInView={{ rotate:40 }}
+          transition={{ duration:0.3 }}
+          >
+          <HandIcon/>
+          </motion.div>
         </h2>
 
         <p className="text-charcoal/80 max-w-lg mb-6 text-base sm:text-lg">

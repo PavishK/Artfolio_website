@@ -9,6 +9,7 @@ import { footerLinks } from "@/data/links";
 import { useRouter } from "next/navigation";
 import { ChevronsUp } from "lucide-react";
 import CustomButton from "./CustomButton";
+import WaterMark from "./WaterMark";
 
 function Footer() {
   const nav = useRouter();
@@ -27,7 +28,8 @@ function Footer() {
     <>
       <footer className="w-full bg-charcoal text-blush border-t border-wood px-6 py-14 sm:py-20 relative overflow-hidden">
 
-        <Image src={"/images/design-footer.svg"} alt="Design" width={60} height={60} className="absolute top-2 right-0 -scale-x-100"/>
+        <Image src={"/images/design-footer.svg"} alt="Design" width={60} height={60} className="absolute top-2 right-0 -scale-x-100 -z-0"/>
+        <Image src={"/images/design-footer.svg"} alt="Design" width={60} height={60} className="absolute bottom-2 left-0 scale-x-100 sm:block hidden"/>
 
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-14 relative z-10">
 
@@ -86,15 +88,16 @@ function Footer() {
             ))}
           </div>
         </div>
+        <WaterMark/>
       </footer>
-
       {/* Bottom Bar */}
-      <motion.div 
-      initial={{ opacity:0 }}
-      whileInView={{ opacity:1 }}
-      transition={{ duration:0.8 }}
+      <div 
       className="bg-wood text-center py-3">
-        <p className="text-sm text-blush/90 tracking-wide">
+        <motion.p
+        initial={{ opacity:0, y:16 }}
+        whileInView={{ opacity:1, y:0 }}
+        transition={{ duration:0.6 }}
+        className="text-sm text-blush/90 tracking-wide">
           © {new Date().getFullYear()}{" "}
           <span
             className="font-semibold cursor-pointer select-none hover:text-charcoal transition"
@@ -103,8 +106,8 @@ function Footer() {
             ArtByParthi
           </span>
           . All rights reserved.
-        </p>
-      </motion.div>
+        </motion.p>
+      </div>
     </>
   );
 }
