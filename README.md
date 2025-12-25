@@ -173,6 +173,40 @@ Open 👉 `http://localhost:3000` in your browser.
 
 > Below are some previews of the Artfolio website showcasing the UI and core features.
 
+### 🏠 Home Page
+
+<img src="https://github.com/user-attachments/assets/7f2eca9a-5d48-43e6-8f86-4ba732122683" width="100%" alt="Home Page" />
+
+---
+
+### 🎨 Artwork Gallery
+
+<img src="https://github.com/user-attachments/assets/4a231b8b-43be-4d31-a12e-1ca3bb4c84a4" width="100%" alt="Artwork Gallery" />
+
+---
+
+### 👤 About
+
+<img src="https://github.com/user-attachments/assets/9523a491-d7a3-4e6a-a7bc-6db0b926c87d" width="100%" alt="Artist Profile" />
+
+---
+
+### 📩 Contact
+
+<img src="https://github.com/user-attachments/assets/f97e77a9-0124-4b0b-8a10-ba9cbafa2d30" width="100%" alt="Contact Form" />
+
+---
+
+### 🔐 Dashboard / Management
+
+<img src="https://github.com/user-attachments/assets/4394ac42-2a1b-4222-a3fc-b311446c44b6" width="100%" alt="Authentication" />
+
+---
+
+### 🗄️ Dashboard / Management
+
+<img src="https://github.com/user-attachments/assets/47a2fecc-d937-4aa4-babc-f954f58cfb30" width="100%" alt="Dashboard" />
+
 ---
 
 ## 🙌 Future Enhancements
