@@ -4,7 +4,7 @@ import { convertToBase64 } from "@/services/convertToBase64";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function UploadImage({ choosedImage, newImage }) {
+export default function UploadImage({ choosedImage, newImage=()=>null, label, className }) {
 
     const [ error, setError ] = useState(false);
 
@@ -34,8 +34,8 @@ export default function UploadImage({ choosedImage, newImage }) {
   return (
     <div className="max-w-sm mb-4">
       <form>
-        <label className="block text-wood font-semibold mb-2">
-          Profile Image
+        <label className={`${className}`}>
+          {label}
         </label>
 
         <input
@@ -44,6 +44,7 @@ export default function UploadImage({ choosedImage, newImage }) {
           name="image"
           onChange={onSelectImage}
           className={`
+          mt-2
             ${ error && 'bg-red-400 file:bg-red-500'}
             rounded-lg
             file:cursor-pointer

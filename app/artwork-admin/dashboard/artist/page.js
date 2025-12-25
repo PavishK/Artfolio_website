@@ -112,7 +112,7 @@ export default function Artist() {
           </div>
 
           {/* Image URL */}
-          <UploadImage choosedImage={(e) => setImage(e)} newImage={(val)=>setIsNewImage(val)}/>
+          <UploadImage label={"Profile Image"} className={"block text-wood font-semibold mb-2"} choosedImage={(e) => setImage(e)} newImage={(val)=>setIsNewImage(val)}/>
 
           {/* Buttons */}
           <div className="flex gap-5 w-full items-center justify-end">

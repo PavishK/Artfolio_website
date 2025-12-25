@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { ChevronsUp } from "lucide-react";
 import CustomButton from "./CustomButton";
 import WaterMark from "./WaterMark";
+import { title } from "@/data/names";
 
 function Footer() {
   const nav = useRouter();
@@ -44,7 +45,7 @@ function Footer() {
                 className="rounded-full shadow-xl"
               />
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-wide text-blush">
-                ArtByParthi
+                {title}
               </h1>
             </div>
 
@@ -95,7 +96,7 @@ function Footer() {
       className="bg-wood text-center py-3">
         <motion.p
         initial={{ opacity:0, y:16 }}
-        whileInView={{ opacity:1, y:0 }}
+        animate={{ opacity:1, y:0 }}
         transition={{ duration:0.6 }}
         className="text-sm text-blush/90 tracking-wide">
           © {new Date().getFullYear()}{" "}
@@ -103,7 +104,7 @@ function Footer() {
             className="font-semibold cursor-pointer select-none hover:text-charcoal transition"
             onDoubleClick={moveToDashboard}
           >
-            ArtByParthi
+            {title}
           </span>
           . All rights reserved.
         </motion.p>

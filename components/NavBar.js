@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Icon from "@/app/favicon.ico";
 import AnimatedMenuIcon from "./AnimatedMenuIcon";
 import { clientSites } from "@/data/menus";
+import { title } from "@/data/names";
 
 function NavBar() {
   const pathname = usePathname();
@@ -51,7 +52,7 @@ function NavBar() {
           height={30}
           className="rounded-full"
         />
-        <span className="tracking-wide">ArtByParthi</span>
+        <span className="tracking-wide">{title}</span>
       </div>
 
       {/* Desktop Navigation */}

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { imagekit } from "@/lib/imagekit";
 import { compare_password, hash_password } from "@/lib/bcrypt";
+import { uploadImage } from "./uploadController";
 
 export async function profile_data() {
     try {
@@ -24,13 +25,9 @@ export async function set_profile( data, id ) {
     var fileUrl = imageUrl;
     
     if(newImage) {
-        const res = await imagekit.upload({
-            file:imageUrl,
-            fileName:`abp_${Date.now()}`,
-            folder:'/uploads'
-        });
+        const url = await uploadImage('uploads', imageUrl);
     
-        fileUrl = res.url;
+        fileUrl = url;
     }
 
 

@@ -14,7 +14,7 @@ export default function About() {
     <div className="w-full flex flex-col bg-gradient-to-br from-blush to-white">
 
       {/* SECTION 1 — HERO */}
-      <section className="relative w-full flex flex-col items-center justify-center px-6 sm:px-12 lg:px-20 py-10 mt-10 sm:mt-0 sm:py-12 overflow-hidden">
+      <section className="relative w-full flex flex-col items-center justify-center px-6 sm:px-12 lg:px-20 py-10 mt-10 sm:mt-10 sm:py-12 overflow-hidden">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-20 w-full max-w-7xl">
 
           {/* Left Content */}

@@ -12,6 +12,7 @@ import AnimatedMenuIcon from "./AnimatedMenuIcon";
 import toast from "react-hot-toast";
 import Popup from "./Popup";
 import { adminSites } from '@/data/menus'
+import { title } from "@/data/names";
 
 function AdminNavBar() {
   const pathname = usePathname();
@@ -86,7 +87,7 @@ function AdminNavBar() {
           height={30}
           className="rounded-full"
         />
-        <span className="tracking-wide">ArtByParthi</span>
+        <span className="tracking-wide">{title}</span>
       </div>
 
       {/* Desktop Navigation */}

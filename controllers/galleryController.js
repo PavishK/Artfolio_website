@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { imagekit } from "@/lib/imagekit";
+import { uploadImage } from "./uploadController";
 
 export const fetchImages = async() => {
     try {
@@ -24,15 +24,11 @@ export const saveImage = async(imageData) => {
     try {
         const { imageUrl, userId } = imageData;
         
-        const res = await imagekit.upload({
-            file:imageUrl,
-            fileName:`abp_${Date.now()}`,
-            folder:'/uploads'
-        });
+        const url = await uploadImage('uploads', imageUrl);
 
         const data = await prisma.artwork.create({
             data: {
-                imageUrl:res.url,
+                imageUrl:url,
                 userId
             }
         });
