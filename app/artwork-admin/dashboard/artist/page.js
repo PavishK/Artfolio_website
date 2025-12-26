@@ -99,7 +99,7 @@ export default function Artist() {
             </label>
             <textarea
               name="desc"
-              value={desc}
+              value={desc ?? ""}
               onChange={ (e) => setDesc(e.target.value)}
               placeholder="Write something about yourself..."
               rows="4"
@@ -107,7 +107,7 @@ export default function Artist() {
               className="w-full p-3 rounded-xl border border-royal/40 bg-white focus:ring-2 focus:ring-royal focus:outline-none text-charcoal font-medium placeholder:text-charcoal/50 resize-none"
             ></textarea>
             <div className="text-right text-sm text-charcoal/70 mt-1">
-              {desc.length} / 350
+              {desc?.length ?? 0} / 350
             </div>
           </div>
 

@@ -67,7 +67,7 @@ function Contact() {
 
     <div className='text-black w-full flex sm:flex-row gap-y-10 flex-col-reverse items-center justify-between px-6 sm:px-12 lg:px-20 py-10 mt-12 sm:mt-10 sm:py-12 overflow-hidden'>
       
-      <div className='flex-1/2 sm:h-screen relative flex flex-col items-start justify-normal gap-y-8'>
+      <div className='flex-1/2 relative flex flex-col items-start justify-normal gap-y-8'>
 
         { contacts.map((v,i) => (
           <motion.div
@@ -115,7 +115,7 @@ function Contact() {
 
       </div>
 
-      <div className='w-full h-screen flex-1/2 flex flex-col items-start justify-normal gap-y-6 px-8 py-10 bg-blush rounded-xl'>
+      <div className='w-full flex-1/2 flex flex-col items-start justify-normal gap-y-6 px-8 py-10 bg-blush rounded-xl'>
           
           <div className=' text-charcoal sm:pr-10'>
             <h1 className='text-2xl sm:text-3xl font-medium'>Need an art? Designed just for you. Let&apos;s Get Started.</h1>
