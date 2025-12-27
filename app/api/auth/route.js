@@ -4,10 +4,10 @@ import { register_user } from "@/controllers/registerController";
 import { verify_admin } from "@/controllers/loginController";
 
 const cookieConfig = { name: "jwttoken", httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true, // Local false
       path: "/",
       maxAge: 3600,
-      sameSite:'lax'
+      sameSite:'none' // Local "lax"
     }
 
 export async function POST(req) {
@@ -17,7 +17,7 @@ export async function POST(req) {
             return NextResponse.json({ message:"Missing data!"},{status:400 });
         }
         const { message, status, error, user_id, token } = await verify_admin({ username, password });
-        // console.log(error);
+        console.log(error);
         
         //Using Cookies
         (await cookies()).set("jwttoken", token, cookieConfig);
