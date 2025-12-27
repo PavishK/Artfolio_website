@@ -42,7 +42,8 @@ function Footer() {
                 alt="logo"
                 width={52}
                 height={52}
-                className="rounded-full shadow-xl"
+                unoptimized
+                className="rounded-full shadow-xl w-8 h-8"
               />
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-wide text-blush">
                 {title}

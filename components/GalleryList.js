@@ -9,6 +9,7 @@ import Popup from './Popup';
 function GalleryList({ images, title, adminMode = false, onClickDelete }) {
 
   const openNewTab = (url) => {
+    if(adminMode) return;
     window.open(url,{ target:"_blank"});
   }
 
@@ -49,7 +50,9 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
               width={100}
               height={100}
               alt="gallery img"
+              unoptimized
               loading="eager"
+              onClick={()=>openNewTab(val.imageUrl)}
               className="w-full h-96 object-cover object-center transition-all duration-500 group-hover:scale-105"
             />
 
@@ -65,7 +68,6 @@ function GalleryList({ images, title, adminMode = false, onClickDelete }) {
 
             {/* Hover Caption */}
            { !adminMode && <div
-              onClick={()=>openNewTab(val.src)}
               className="absolute top-2 right-2 bg-charcoal px-2 py-1 text-xl rounded-xl font-bold transition-all"
             >
             #{i + 1}

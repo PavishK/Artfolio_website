@@ -17,7 +17,7 @@ export async function POST(req) {
             return NextResponse.json({ message:"Missing data!"},{status:400 });
         }
         const { message, status, error, user_id, token } = await verify_admin({ username, password });
-        console.log(error);
+        // console.log(error);
         
         //Using Cookies
         (await cookies()).set("jwttoken", token, cookieConfig);
