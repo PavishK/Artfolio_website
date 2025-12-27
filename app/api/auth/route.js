@@ -4,10 +4,10 @@ import { register_user } from "@/controllers/registerController";
 import { verify_admin } from "@/controllers/loginController";
 
 const cookieConfig = { name: "jwttoken", httpOnly: true,
-      secure: true, // Local false
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: 3600,
-      sameSite:'none' // Local "lax"
+      sameSite:'lax'
     }
 
 export async function POST(req) {
